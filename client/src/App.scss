@@ -1,0 +1,232 @@
+// ============================================
+// ЦВЕТОВАЯ ПАЛИТРА (Пастельные на темном)
+// ============================================
+$bg-dark: #1a1a2e;           // Основной темный фон
+$bg-card: #16213e;           // Фон карточек
+$bg-card-hover: #1f3460;     // Фон карточек при наведении
+
+// Пастельные акценты
+$pastel-pink: #ffb6c1;       // Светло-розовый
+$pastel-blue: #b8d4e3;       // Светло-голубой
+$pastel-green: #c1e1c1;      // Светло-зеленый
+$pastel-yellow: #fff4bd;     // Светло-желтый
+$pastel-purple: #d4b8d4;     // Светло-фиолетовый
+$pastel-orange: #ffd4b8;     // Светло-оранжевый
+
+$text-primary: #e8e8e8;      // Основной текст
+$text-secondary: #b8b8b8;    // Вторичный текст
+$price-color: #98dd98;       // Цвет цены (пастельно-зеленый)
+
+$border-color: rgba(255, 255, 255, 0.1);
+$shadow-color: rgba(0, 0, 0, 0.3);
+
+// ============================================
+// МИКСИНЫ
+// ============================================
+@mixin card-style {
+    background: $bg-card;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px $shadow-color;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid $border-color;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        background: $bg-card-hover;
+    }
+}
+
+@mixin pastel-badge($color) {
+    background: rgba($color, 0.2);
+    color: $color;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid rgba($color, 0.3);
+}
+
+// ============================================
+// ОСНОВНЫЕ СТИЛИ
+// ============================================
+.App {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, $bg-dark 0%, #0f0f1e 100%);
+    color: $text-primary;
+    min-height: 100vh;
+    padding: 40px 20px;
+
+    header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding: 30px;
+        background: linear-gradient(135deg, rgba(184, 212, 227, 0.1) 0%, rgba(255, 182, 193, 0.1) 100%);
+        border-radius: 24px;
+        border: 1px solid $border-color;
+
+        h1 {
+            margin: 0;
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, $pastel-blue 0%, $pastel-pink 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        p {
+            margin-top: 10px;
+            color: $text-secondary;
+            font-size: 16px;
+        }
+    }
+
+    .product-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 32px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+
+        .product-card {
+            @include card-style;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+
+            // Изображение товара
+            .product-image {
+                width: 100%;
+                height: 220px;
+                object-fit: cover;
+                border-radius: 16px;
+                margin-bottom: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                transition: transform 0.3s ease;
+            }
+
+            &:hover .product-image {
+                transform: scale(1.05);
+            }
+
+            // Название товара
+            h3 {
+                margin: 0 0 12px 0;
+                font-size: 24px;
+                font-weight: 700;
+                color: $pastel-blue;
+                text-align: center;
+            }
+
+            // Категория (бейдж)
+            .category-badge {
+                @include pastel-badge($pastel-purple);
+                display: inline-block;
+                margin-bottom: 12px;
+                text-align: center;
+                align-self: center;
+            }
+
+            // Описание
+            .description {
+                color: $text-secondary;
+                font-size: 14px;
+                line-height: 1.6;
+                margin-bottom: 16px;
+                text-align: center;
+                flex-grow: 1;
+            }
+
+            // Цена
+            .price {
+                font-weight: 700;
+                font-size: 28px;
+                color: $price-color;
+                text-align: center;
+                margin: 16px 0;
+                text-shadow: 0 2px 8px rgba(152, 221, 152, 0.3);
+            }
+
+            // Количество на складе
+            .stock {
+                text-align: center;
+                font-size: 14px;
+                color: $text-secondary;
+                margin-bottom: 20px;
+                padding: 8px;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 12px;
+
+                .stock-value {
+                    font-weight: 600;
+                    color: $pastel-yellow;
+                }
+
+                &.low-stock .stock-value {
+                    color: #ff9999;
+                }
+            }
+
+            // Кнопка удаления
+            .delete-btn {
+                background: linear-gradient(135deg, rgba(255, 182, 193, 0.2) 0%, rgba(255, 153, 153, 0.2) 100%);
+                color: $pastel-pink;
+                border: 2px solid rgba(255, 182, 193, 0.4);
+                padding: 12px 24px;
+                border-radius: 12px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                align-self: center;
+                width: 100%;
+
+                &:hover {
+                    background: linear-gradient(135deg, rgba(255, 182, 193, 0.4) 0%, rgba(255, 153, 153, 0.4) 100%);
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 16px rgba(255, 182, 193, 0.3);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+
+            // Декоративный элемент
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, $pastel-pink, $pastel-blue, $pastel-green);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            &:hover::before {
+                opacity: 1;
+            }
+        }
+    }
+
+    // Адаптивность
+    @media (max-width: 768px) {
+        header h1 {
+            font-size: 32px;
+        }
+
+        .product-list {
+            grid-template-columns: 1fr;
+            padding: 0 10px;
+        }
+    }
+}
